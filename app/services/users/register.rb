@@ -1,38 +1,24 @@
-module Api::Users
+module Users
   class Register
     prepend SimpleCommand
-    def initialize(params)
+    def initialize(params, client_id)
       @user_params = params
+      @client_id = client_id
     end
 
     def call
-      raise I18n.t("user.errors.#{invalid_client}") unless client_app
-      user = User.new(email: user_params[:email], password: user_params[:password])
-      result = user.save
-      raise I18n.t("user.errors.#{error_register}") unless result
-      response(user, access_token)
+      create_user
     end
 
     private
-    def client_app
-      @client_app ||= Doorkeeper::Application.find_by(uid: params[:client_id])
-    end
 
-    def generate_refresh_token
-      loop do
-        token = SecureRandom.hex(32)
-        break token unless Doorkeeper::AccessToken.exists?(refresh_token: token)
-      end
-    end
-
-    def access_token
-      Doorkeeper::AccessToken.create(
-        resource_owner_id: user.id,
-        application_id: client_app.id,
-        refresh_token: generate_refresh_token,
-        expires_in: Doorkeeper.configuration.access_token_expires_in.to_i,
-        scopes: ''
-      )
+    def create_user
+      exist_user = User.find_by(email: @user_params[:email])
+      raise I18n.t("user.errors.exist_profile") if exist_user.present?
+      user = User.create(email: @user_params[:email], password: @user_params[:password])
+      raise I18n.t("user.errors.error_register") unless user
+      access_token = Api::GenerateTokenService(user, @client_id)
+      response(user, access_token)
     end
 
     def response(user, access_token)
