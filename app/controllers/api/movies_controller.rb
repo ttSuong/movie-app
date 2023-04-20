@@ -1,14 +1,15 @@
 class Api::MoviesController < ApplicationController
-  before_action :set_movie, only: %i[ show edit update destroy ]
+  before_action :set_movie, only: %i[ show ]
 
   # GET /movies or /movies.json
   def index
     @movies = Movie.all
-    render json: { movies: @movies }, status: 200
+    render json: { result: @movies }, status: 200
   end
 
   # GET /movies/1 or /movies/1.json
   def show
+    render json: { result: @movie }, status: 200
   end
 
   # GET /movies/new
@@ -20,22 +21,7 @@ class Api::MoviesController < ApplicationController
 
   end
 
-  # GET /movies/1/edit
-  def edit
-  end
-
-  # POST /movies or /movies.json
-  def create
-
-  end
-
-  # PATCH/PUT /movies/1 or /movies/1.json
-  def update
-
-  end
-
-  # DELETE /movies/1 or /movies/1.json
-  def destroy
+  def reaction_movie
 
   end
 

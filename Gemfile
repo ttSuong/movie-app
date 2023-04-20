@@ -64,3 +64,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise', '~> 4.7.3'
 gem 'doorkeeper', '~> 5.4.0'
 gem 'simple_command'
+gem 'rack-cors'

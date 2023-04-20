@@ -14,20 +14,10 @@ class CreateDoorkeeperTables < ActiveRecord::Migration[5.2]
 
     add_index :oauth_applications, :uid, unique: true
 
-    create_table :oauth_access_grants do |t|
-      t.references :resource_owner,  null: false
-      t.references :application,     null: false
-      t.string   :token,             null: false
-      t.integer  :expires_in,        null: false
-      t.text     :redirect_uri
-      t.datetime :created_at,        null: false
-      t.datetime :revoked_at
-      t.string   :scopes,            null: false, default: ''
-    end
-
     create_table :oauth_access_tokens do |t|
       t.references :resource_owner, index: true
       t.references :application,    null: false
+
       t.string :token, null: false
 
       t.string   :refresh_token
@@ -45,6 +35,5 @@ class CreateDoorkeeperTables < ActiveRecord::Migration[5.2]
       :oauth_applications,
       column: :application_id
     )
-
   end
 end

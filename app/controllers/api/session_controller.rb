@@ -1,12 +1,12 @@
 class Api::SessionController < Api::ApplicationController
+  skip_before_action :doorkeeper_authorize!, only: %i[create]
   def create
-    return  render(json: { error: I18n.t("user.errors.invalid_client") }, status: 422) unless client_app.present?
-    user = User.authenticate(user_params[:email], user_params[:password])
-    if user
-      render json: { data: Api::GenerateTokenService.new(user, client_app.id).call }, status: 200
-    else
-      render json: {errors: I18n.t("errors.api.sessions_controller.login.failed")}, status: 400
-    end
+    byebug
+    return render json: { error: I18n.t("user.errors.invalid_client") }, status: 422 unless client_app.present?
+    command = Users::CreateSession.call(user_params, client_app.id)
+    render json: { result: command.result }
+  rescue => ex
+    render json: { errors: ex.message }, status: 500
   end
 
   def destroy
@@ -26,5 +26,9 @@ class Api::SessionController < Api::ApplicationController
 
   def client_app
     @client_app ||= Doorkeeper::Application.find_by(uid: params[:client_id])
+  end
+
+  def user
+    @user ||= User.find_by(email: user_params[:email])
   end
 end
