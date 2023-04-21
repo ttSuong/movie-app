@@ -4,8 +4,6 @@ Rails.application.routes.draw do
   end
   # devise_for :users
   namespace :api do
-    get 'profile' => "users#show"
-    post 'register' => "users#create"
     post "login"  => "session#create"
     delete "logout" => "session#destroy"
     resources :movies do

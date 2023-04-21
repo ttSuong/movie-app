@@ -40,14 +40,6 @@ ActiveRecord::Schema.define(version: 2023_04_21_170436) do
     t.string "provider"
   end
 
-  create_table "movies_users", id: false, force: :cascade do |t|
-    t.bigint "movie_id", null: false
-    t.bigint "user_id", null: false
-    t.string "type_reaction", null: false
-    t.index ["movie_id"], name: "index_movies_users_on_movie_id"
-    t.index ["user_id"], name: "index_movies_users_on_user_id"
-  end
-
   create_table "oauth_access_tokens", force: :cascade do |t|
     t.bigint "resource_owner_id"
     t.bigint "application_id", null: false
