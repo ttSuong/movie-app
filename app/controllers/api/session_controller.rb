@@ -1,7 +1,6 @@
 class Api::SessionController < Api::ApplicationController
   skip_before_action :doorkeeper_authorize!, only: %i[create]
   def create
-    byebug
     return render json: { error: I18n.t("user.errors.invalid_client") }, status: 422 unless client_app.present?
     command = Users::CreateSession.call(user_params, client_app.id)
     render json: { result: command.result }

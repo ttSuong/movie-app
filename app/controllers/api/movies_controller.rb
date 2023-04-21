@@ -1,5 +1,6 @@
-class Api::MoviesController < ApplicationController
+class Api::MoviesController < Api::ApplicationController
   before_action :set_movie, only: %i[ show ]
+  skip_before_action :doorkeeper_authorize!, only: %i[index]
 
   # GET /movies or /movies.json
   def index
@@ -18,7 +19,9 @@ class Api::MoviesController < ApplicationController
   end
 
   def share_movie
-
+    byebug
+    command = Movies::SharedMovie.call(params[:video_url], current_user)
+    render json: { result: MovieSerializer.new(command.result) }, status: 200
   end
 
   def reaction_movie

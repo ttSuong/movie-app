@@ -8,6 +8,10 @@ Rails.application.routes.draw do
     post 'register' => "users#create"
     post "login"  => "session#create"
     delete "logout" => "session#destroy"
-    resources :movies
+    resources :movies do
+      collection do
+        post 'share_movie'
+      end
+    end
   end
 end
