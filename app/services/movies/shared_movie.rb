@@ -13,8 +13,17 @@ module Movies
 
     private
     def shared_video
-      byebug
-      current_movie =  Movie.find_by(url: @url)
+      video = VideoInfo.new(@url)
+      video_params = {
+        title: video.title,
+        description: video.description,
+        url_id: video.video_id,
+        url: video.embed_url,
+        is_sharing: true,
+        shared_by: @current_user.email,
+        provider: video.provider,
+      }
+      current_movie = Movie.find_by(url: video.embed_url)
       if current_movie.present?
         current_movie.update_attributes(video_params)
       else
@@ -22,19 +31,5 @@ module Movies
       end
       current_movie
     end
-
-    def video_params
-      video = VideoInfo.new(@url)
-      {
-        title: video.title,
-        description: video.description,
-        url_id: video.video_id,
-        url: @url,
-        is_sharing: true,
-        shared_by: @current_user.email,
-        provider: video.provider,
-      }
-    end
-
   end
 end

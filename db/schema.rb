@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_04_21_154719) do
+ActiveRecord::Schema.define(version: 2023_04_21_170436) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "movie_users", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "movie_id"
+    t.string "type_reaction"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["movie_id"], name: "index_movie_users_on_movie_id"
+    t.index ["user_id", "movie_id"], name: "movie_user_index", unique: true
+    t.index ["user_id"], name: "index_movie_users_on_user_id"
+  end
 
   create_table "movies", force: :cascade do |t|
     t.string "title"
@@ -27,6 +38,14 @@ ActiveRecord::Schema.define(version: 2023_04_21_154719) do
     t.string "url_id"
     t.boolean "is_sharing"
     t.string "provider"
+  end
+
+  create_table "movies_users", id: false, force: :cascade do |t|
+    t.bigint "movie_id", null: false
+    t.bigint "user_id", null: false
+    t.string "type_reaction", null: false
+    t.index ["movie_id"], name: "index_movies_users_on_movie_id"
+    t.index ["user_id"], name: "index_movies_users_on_user_id"
   end
 
   create_table "oauth_access_tokens", force: :cascade do |t|

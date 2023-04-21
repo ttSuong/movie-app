@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     delete "logout" => "session#destroy"
     resources :movies do
       collection do
-        post 'share_movie'
+        put 'reaction_movie'
       end
     end
   end

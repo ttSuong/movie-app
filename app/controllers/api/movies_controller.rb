@@ -1,41 +1,30 @@
 class Api::MoviesController < Api::ApplicationController
-  before_action :set_movie, only: %i[ show ]
-  skip_before_action :doorkeeper_authorize!, only: %i[index]
+  skip_before_action :doorkeeper_authorize!, only: %i[ index ]
 
   # GET /movies or /movies.json
   def index
     @movies = Movie.all
-    render json: { result: @movies }, status: 200
+    render :json => @movies, each_serializer: MovieSerializer, status: 200
   end
 
-  # GET /movies/1 or /movies/1.json
   def show
     render json: { result: @movie }, status: 200
   end
 
-  # GET /movies/new
-  def new
-    @movie = Movie.new
-  end
-
-  def share_movie
-    byebug
+  def create
     command = Movies::SharedMovie.call(params[:video_url], current_user)
-    render json: { result: MovieSerializer.new(command.result) }, status: 200
+    render json: { result: MovieSerializer.new(command.result, scope: current_user) }, status: 200
   end
 
   def reaction_movie
-
+    command = Movies::ReactionMovie.call(movie_params, current_user)
+    render json: { result: MovieSerializer.new(command.result, scope: current_user) }, status: 200
+  rescue => ex
+    render json: { errors: ex.message }, status: 500
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_movie
-      @movie = Movie.find(params[:id])
-    end
-
-    # Only allow a list of trusted parameters through.
-    def movie_params
-      params.require(:movie).permit(:title, :url, :total_liked, :total_disliked, :shared_by, :description)
-    end
+  def movie_params
+    params.permit(:id, :type_reaction)
+  end
 end

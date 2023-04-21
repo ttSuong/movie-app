@@ -7,7 +7,6 @@ module Users
     end
 
     def call
-      byebug
       user = User.find_by(email: @user_params[:email])
       if user.present?
         session = User.authenticate(@user_params[:email], @user_params[:password])
