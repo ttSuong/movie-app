@@ -73,4 +73,8 @@ gem 'simple_command'
 gem 'rack-cors'
 gem 'video_info'
 gem 'active_model_serializers', '~> 0.10.2'
-
+gem "capistrano"
+gem "capistrano3-puma"
+gem "capistrano-rails", require: false
+gem "capistrano-bundler", require: false
+gem "capistrano-rvm"
