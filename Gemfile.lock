@@ -295,6 +295,7 @@ DEPENDENCIES
   factory_bot_rails (~> 4.0)
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
+  nokogiri
   pg (>= 0.18, < 2.0)
   puma (~> 3.11)
   rack-cors
