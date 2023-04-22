@@ -18,3 +18,6 @@ production:
   database: movie-app_production
   username: movie-app
   password: <%= ENV['MOVIE-APP_DATABASE_PASSWORD'] %>
+
+
+  SECRET_KEY_BASE:"21754412f40d0b36556b89a269f5b3979eef0b4e211fd5560a09297dfb8f4a89b4c162a1bdcb749579c10a7424adcee5908df8949d6b676a586e7df7162764db"
