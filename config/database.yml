@@ -16,5 +16,5 @@ test:
 production:
   <<: *default
   database: movie-app_production
-  username: movie-app
+  username: <%= ENV['USER_NAME'] %>
   password: <%= ENV['MOVIE-APP_DATABASE_PASSWORD'] %>
