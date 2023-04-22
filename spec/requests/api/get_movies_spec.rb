@@ -2,7 +2,7 @@ require 'rails_helper'
 RSpec.describe "Get movie", type: :request do
   context 'Included token' do
     before {
-      user = create(:user, :email => 'movie1@email.com')
+      user = create(:user)
       movie = create(:movie)
       create(:movie_user, movie: movie, user: user, type_reaction: 'like')
       application = create(:application)

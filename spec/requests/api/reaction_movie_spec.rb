@@ -3,7 +3,7 @@ RSpec.describe "Share movie", type: :request do
   context 'Reaction success movie' do
     before {
       application = create(:application)
-      user = create(:user, :email => 'movie@email.com')
+      user = create(:user)
       movie = create(:movie, :total_liked => 0, :total_disliked => 0)
       create(:movie_user, movie: movie, user: user, type_reaction: 'like')
       token = create(:access_token, application: application, resource_owner_id: user.id)
@@ -29,7 +29,7 @@ RSpec.describe "Share movie", type: :request do
   context 'Reaction success movie' do
     before {
       application = create(:application)
-      user = create(:user, :email => 'movie@email.com')
+      user = create(:user)
       movie = create(:movie, :total_liked => 0, :total_disliked => 0)
       create(:movie_user, movie: movie, user: user, type_reaction: 'like')
       token = create(:access_token, application: application, resource_owner_id: user.id)
@@ -55,7 +55,7 @@ RSpec.describe "Share movie", type: :request do
   context 'Reaction success movie' do
     before {
       application = create(:application)
-      user = create(:user, :email => 'movie@email.com')
+      user = create(:user)
       movie = create(:movie, :total_liked => 0, :total_disliked => 0)
       create(:movie_user, movie: movie, user: user, type_reaction: 'like')
       token = create(:access_token, application: application, resource_owner_id: user.id)
@@ -81,7 +81,7 @@ RSpec.describe "Share movie", type: :request do
   context 'Reaction success movie' do
     before {
       application = create(:application)
-      user = create(:user, :email => 'movie@email.com')
+      user = create(:user)
       movie = create(:movie, :total_liked => 3, :total_disliked => 0)
       create(:movie_user, movie: movie, user: user, type_reaction: 'like')
       token = create(:access_token, application: application, resource_owner_id: user.id)
