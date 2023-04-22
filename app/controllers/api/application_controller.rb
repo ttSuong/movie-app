@@ -3,6 +3,7 @@ class Api::ApplicationController < ActionController::API
 
   private
   def current_user
+    Rails.logger.warn("===== #{doorkeeper_token} ========")
     @current_user ||= User.find_by(id: doorkeeper_token[:resource_owner_id]) if doorkeeper_token.present?
   end
 end
