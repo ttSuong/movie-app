@@ -6,20 +6,20 @@
 # server "example.com", user: "deploy", roles: %w{app db web}, my_property: :my_value
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
+config.assets.compile = true
 
-
-set :stage, :production
-set :rails_env, :production
-set :deploy_to,  "/home/admin_deploy/deploy/apps/movie-app"
-set :branch, "master"
-set :user, "admin_deploy"
-set :use_sudo, true
-set :ssh_options, {
-  keys: %w(~/.ssh/id_rsa),
-  forward_agent: true,
-  user: fetch(:user)
-}
-server 'dev', user: 'admin_deploy', roles: %w{app db web}
+# set :stage, :production
+# set :rails_env, :production
+# set :deploy_to,  "/home/admin_deploy/deploy/apps/movie-app"
+# set :branch, "master"
+# set :user, "admin_deploy"
+# set :use_sudo, true
+# set :ssh_options, {
+#   keys: %w(~/.ssh/id_rsa),
+#   forward_agent: true,
+#   user: fetch(:user)
+# }
+# server 'dev', user: 'admin_deploy', roles: %w{app db web}
 
 # role-based syntax
 # ==================
