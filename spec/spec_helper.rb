@@ -1,4 +1,5 @@
 require "support/factory_bot"
+# require "support/auth_helper"
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
 

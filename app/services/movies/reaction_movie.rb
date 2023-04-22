@@ -8,6 +8,7 @@ module Movies
 
     def call
       return movie if @params[:type_reaction] == 'unset'
+      return  movie if @params[:type_reaction] == last_reaction.type_reaction
       raise I18n.t("user.errors.not_found_movie") unless movie.present?
       update_movie
       update_reaction
